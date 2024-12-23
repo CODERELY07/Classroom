@@ -1,7 +1,7 @@
 $(document).ready(function() {
     function fetchClasses() {
         $.ajax({
-            url: './partials/fetchTeacherClasses.php',  // PHP script to fetch classes
+            url: './loads/fetchTeacherClasses.php',  // PHP script to fetch classes
             type: 'GET',
             success: function(response) {
                 // Update the classes list with the new data
@@ -15,7 +15,7 @@ $(document).ready(function() {
 
     function fetchStudetClasses() {
         $.ajax({
-            url: './partials/fetchStudentClasses.php',  // PHP script to fetch classes
+            url: './loads/fetchStudentClasses.php',  // PHP script to fetch classes
             type: 'GET',
             success: function(response) {
                 // Update the classes list with the new data
@@ -94,13 +94,19 @@ $(document).ready(function() {
             url: './auth/create_class.php',  // PHP script to handle class creation
             data: formData,  // Form data to send
             success: function(response) {
-            
-                alert(response);  // Display response message (for example, success or error message)
-    
-                // Reset the form fields
-                $("#createClassForm")[0].reset();
-              
-                fetchClasses();  
+                try{
+                  
+                    const res = JSON.parse(response);
+                    console.log(res.message);
+                    $('#responseMessage').text(res.message);
+                    $("#createClassForm")[0].reset();
+                        fetchClasses();  
+                    if(res.success){
+                        window.location.href = res.redirect;
+                    } 
+                }catch(e){
+                    $('#responseMessage').text('Error parsing response.');
+                }
             },
             error: function(xhr, status, error) {
                 // Handle errors if any

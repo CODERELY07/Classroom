@@ -7,9 +7,9 @@ if (isset($_GET['class_id'])) {
     $classID = $_GET['class_id'];
 
     // Prepare the query to fetch class details
-    $query = "SELECT c.name, c.section, c.subject, cm.role
-              FROM Class_Members cm
-              JOIN Classes c ON cm.class_id = c.id
+    $query = "SELECT c.name, c.section, c.subject, c.class_code, cm.role
+              FROM class_members cm
+              JOIN classes c ON cm.class_id = c.id
               WHERE c.id = :class_id";
     
     // Prepare and execute the statement
@@ -25,6 +25,9 @@ if (isset($_GET['class_id'])) {
         echo "<strong>Class Name:</strong> " . htmlspecialchars($classDetails['name']) . "<br>";
         echo "<strong>Section:</strong> " . htmlspecialchars($classDetails['section']) . "<br>";
         echo "<strong>Subject:</strong> " . htmlspecialchars($classDetails['subject']) . "<br>";
+        if(isset($_SESSION['role'])  && $_SESSION['role'] === 'Teacher'){
+            echo "<strong>Class Code:</strong> " . htmlspecialchars($classDetails['class_code']) . "<br>";
+        }
     } else {
         echo "<p>Class not found.</p>";
     }
