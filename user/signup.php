@@ -14,6 +14,11 @@
     <input type="text" name="name" placeholder="Full Name" required>
     <input type="email" name="email" placeholder="Email" required>
     <input type="password" name="password" placeholder="Password" required>
+    <select name="role" id="role">
+        <option value=""></option>
+        <option value="Teacher">Teacher</option>
+        <option value="Student">Student</option>
+    </select>
     <input type="submit" value="Sign Up">
 </form>
 

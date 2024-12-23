@@ -10,7 +10,7 @@
         $name = $_POST['name'] ?? '';
         $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
-
+        $role = $_POST['role'] ?? '';
         // Basic validation
         if (empty($name) || empty($email) || empty($password)) {
             echo 'Please fill in all fields and select a valid role.';
@@ -22,12 +22,13 @@
 
         // Prepare and execute the insert statement
         try {
-            $stmt = $conn->prepare("INSERT INTO Users (name, email, password) VALUES (:name, :email, :password)");
+            $stmt = $conn->prepare("INSERT INTO Users (name, email, role, password) VALUES (:name, :email, :role ,:password)");
 
             // Bind parameters
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $hashedPassword);
+            $stmt->bindParam(':role', $role);
 
             if ($stmt->execute()) {
                 echo 'User registered successfully.';

@@ -13,6 +13,9 @@ CREATE TABLE Users (
 CREATE TABLE Classes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    section VARCHAR(255) NULL,
+    subject VARCHAR(255) NULL,
+    class_code VARCHAR(8) NULL,
     description TEXT,
     teacher_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

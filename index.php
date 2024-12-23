@@ -12,6 +12,7 @@ $routes = [
     'room' => 'user/index.php',
     'subject' => 'user/subject.php',
     'logout' => 'auth/logout.php',
+    'class' => 'user/class.php',
 ];
 
 $route = isset($_GET['route']) ? $_GET['route'] : 'home';
