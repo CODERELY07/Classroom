@@ -1,0 +1,62 @@
+.introjs-tooltip {
+    background-color: #ffffff; /* Clean white background for clarity */
+    color: #444444; /* Dark gray text for improved readability */
+    border-radius: 6px; /* Slightly more rounded corners for a modern look */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Softer and slightly deeper shadow */
+    padding: 20px; /* Comfortable padding */
+    font-family: 'Helvetica Neue', Arial, sans-serif; /* Clean modern font */
+    font-size: 15px; /* Slightly larger readable size */
+    border: 1px solid #007bff; /* Blue border for a professional touch */
+    transition: all 0.3s ease; /* Smooth transitions */
+}
+
+.introjs-arrow {
+    border-top-color: #ffffff; /* Match the tooltip background */
+    transition: border-top-color 0.3s ease; /* Smooth transition */
+}
+
+.introjs-button {
+    background-color: #007bff; /* Primary blue color */
+    color: #ffffff; /* White text */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded edges */
+    padding: 10px 15px; /* Comfortable padding */
+    font-weight: bold; /* Bold text for emphasis */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth hover effect */
+}
+
+.introjs-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+.custom-tooltip {
+    background-color: #f0f9ff; /* Very light blue for custom tooltips */
+    border-left: 4px solid #007bff; /* Blue accent border on the left */
+}
+
+/* Additional Styles for Better Presentation */
+.introjs-tooltip h2 {
+    font-size: 18px; /* Larger title font size */
+    margin: 0 0 10px 0; /* Margin adjustments */
+    font-weight: bold; /* Bold title */
+    color: #007bff; /* Primary color for the title */
+}
+
+.introjs-tooltip p {
+    line-height: 1.6; /* Increased line height for readability */
+    margin: 0; /* Remove default margins */
+}
+
+.introjs-tooltip .introjs-button {
+    margin-top: 10px; /* Space between button and content */
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .introjs-tooltip {
+        font-size: 14px; /* Smaller font size on mobile */
+        padding: 15px; /* Adjust padding */
+    }
+}
