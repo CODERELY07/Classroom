@@ -15,6 +15,7 @@
 </head>
 <body>
     <?php //isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 'User not logged in' ?>
+
     <div class="first">
     <?php if (isset($_SESSION['user_id'])): ?>
         <div class="logout">

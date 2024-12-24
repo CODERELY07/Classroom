@@ -34,19 +34,43 @@ $(document).ready(function() {
         event.preventDefault(); 
         
         const formData = $(this).serialize();
-       
+        
+        // Change the button text to "Signing Up..."
+      
+        
         $.ajax({
             url: './auth/signup_auth.php',
             type: 'POST',
             data: formData,
             success: function(response) {
-                $('#responseMessage').text(response); 
+                const res = JSON.parse(response);
+                // Show the success message
+                $('#responseMessage').removeClass('alert-danger').addClass('alert-success').text(res.message).show();
+                if(res.success){
+                    $('.btn-signup').prop('disabled', true).text('Signing Up...');
+                };
+                setTimeout(function() {
+                    if(res.success){
+                        window.location.href = res.redirect;
+                    };
+                }, 3000); // 3000 milliseconds = 3 seconds
+                
             },
             error: function(xhr, status, error) {
-                $('#responseMessage').text('An error occurred: ' + error);
+                // Show the error message
+                $('#responseMessage').removeClass('alert-success').addClass('alert-danger').text('An error occurred: ' + error).show();
+                
+                // After 3 seconds, reset the button text and enable it again
+                setTimeout(function() {
+                    $('.btn-signup').prop('disabled', false).text('Sign Up');
+                }, 3000); // 3000 milliseconds = 3 seconds
             }
         });
     });
+
+
+
+
 
     // Login
     $('#loginForm').on('submit', function(event) {
@@ -61,7 +85,7 @@ $(document).ready(function() {
             success: function(response) {
                 try {
                     const res = JSON.parse(response);
-                    $('#responseMessage').text(res.message);
+                    $('#responseMessage').removeClass('alert-danger').addClass('alert-success').text(res.message).show();
                     if (res.success) {
                         window.location.href = res.redirect; 
                     }

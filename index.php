@@ -20,17 +20,18 @@ $route = isset($_GET['route']) ? $_GET['route'] : 'home';
 // Check if the user is logged in
 $isLoggedIn = isset($_SESSION['user_id']);
 
-// Route access control
+
+// Route access control based on login status
 if ($isLoggedIn) {
-    // If logged in, restrict access to only logout and user pages
+    // If logged in, restrict access to only logout and user-related pages
     if ($route === 'home' || $route === 'signup' || $route === 'login') {
         header('Location: ?route=room'); // Redirect to a default route for logged-in users
         exit;
     }
 } else {
-    // If not logged in, restrict access to only home, signup, and login
+    // If not logged in, restrict access to home, signup, and login pages
     if ($route !== 'home' && $route !== 'signup' && $route !== 'login') {
-        header('Location: ?route=login');
+        header('Location: ?route=login'); // Redirect to login page
         exit;
     }
 }
@@ -39,6 +40,6 @@ if ($isLoggedIn) {
 if (array_key_exists($route, $routes)) {
     include($routes[$route]);
 } else {
-    include('404.php'); 
+    include('404.php'); // Show 404 error if the route is invalid
 }
 ?>

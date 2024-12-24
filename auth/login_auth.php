@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        $stmt = $conn->prepare("SELECT id, password, role FROM Users WHERE email = :email");
+        $stmt = $conn->prepare("SELECT id, password, role, remember_token FROM Users WHERE email = :email");
         $stmt->bindParam(':email', $email);
         $stmt->execute();
 
@@ -29,6 +29,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->rowCount() === 1) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
             if (password_verify($password, $user['password'])) {
+                
+                if (isset($_POST['remember_me'])) {
+                    // Generate a unique token
+                    $token = bin2hex(random_bytes(16));
+
+                    // Store the token in the database
+                    $updateStmt = $conn->prepare("UPDATE Users SET remember_token = :token WHERE id = :id");
+                    $updateStmt->bindParam(':token', $token);
+                    $updateStmt->bindParam(':id', $user['id']);
+                    $updateStmt->execute();
+
+                    // Set cookies to remember the user for 30 days
+                    setcookie("user_email", $email, time() + (30 * 24 * 60 * 60), "/");
+                    setcookie("remember_token", $token, time() + (30 * 24 * 60 * 60), "/");
+                } else {
+                    // If not checked, clear cookies and token
+                    setcookie("user_email", "", time() - 3600, "/");
+                    setcookie("remember_token", "", time() - 3600, "/");
+                    
+                    // Clear the remember token in the database
+                    $updateStmt = $conn->prepare("UPDATE Users SET remember_token = NULL WHERE id = :id");
+                    $updateStmt->bindParam(':id', $user['id']);
+                    $updateStmt->execute();
+                }
+
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['role'] = $user['role'] ?? 'yes';
 
